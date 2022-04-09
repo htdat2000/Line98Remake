@@ -34,6 +34,6 @@ public class KnotGenerator : MonoBehaviour
 
     void AddKnotToGrid(int row, int column, GameObject knot)
     {     
-        GridManager.instance.AddKnot(row, column, knot);              
+        GridManager.instance.AddKnot(row, column, knot.GetComponent<Knot>());              
     }
 }
