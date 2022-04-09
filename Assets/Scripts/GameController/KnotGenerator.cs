@@ -15,12 +15,11 @@ public class KnotGenerator : MonoBehaviour
             return;
         }
         instance = this;
-        InstantiateKnot(9,9);
     }
 
     public async void InstantiateKnot(int row, int column)
     {
-        DebugMissingPrefab();
+        int knotCount = 0;
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < column; j++)
@@ -28,19 +27,13 @@ public class KnotGenerator : MonoBehaviour
                 Vector2 pos = new Vector2 (i, j);
                 GameObject newKnot = Instantiate(knot, pos, Quaternion.identity);
                 newKnot.transform.SetParent(knotHolder.transform);
+                AddKnotToGrid(i, j, newKnot);
             }
         }
     }
 
-    void DebugMissingPrefab()
-    {
-        if(knot == null)
-        {
-            Debug.LogError("No knot prefab");
-        }
-        if(knotHolder == null)
-        {
-            Debug.LogError("No knot holder");
-        }
+    void AddKnotToGrid(int row, int column, GameObject knot)
+    {     
+        GridManager.instance.AddKnot(row, column, knot);              
     }
 }
