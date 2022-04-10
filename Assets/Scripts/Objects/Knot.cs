@@ -7,6 +7,7 @@ public class Knot : MonoBehaviour
     public int knot_ID;
     public int xIndex;
     public int yIndex;
+    public int parentKnotID; //the previous knot id
     public bool isWalkable = true;
     public bool isCheck = false;
 

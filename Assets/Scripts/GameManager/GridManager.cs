@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GridManager : MonoBehaviour
 {
@@ -9,13 +10,14 @@ public class GridManager : MonoBehaviour
     public Knot[,] grid = new Knot [9, 9];
     private int gridRow = 9;
     private int gridColumn = 9;
-    private int numOfKnot = 81;
+    //private int numOfKnot = 81;
 
     [Header("Path Finding Setup")]
     private Knot startKnot;
     private Knot endKnot;
-    private int[] xDirection = {0, 1, 0, -1};
-    private int[] yDirection = {-1, 0, 1, 0};
+    private Knot[] knots = new Knot [81];
+    private int[] xDirection = {-1, 0, 1, 0};
+    private int[] yDirection = {0, 1, 0, -1};
 
     void Awake()
     {
@@ -34,8 +36,9 @@ public class GridManager : MonoBehaviour
     public void AddKnot(int column, int row, Knot knot, int _knot_ID)
     {
         grid[column, row] = knot;
-        grid[column, row].SetKnotIndex(row, column);
+        grid[column, row].SetKnotIndex(column, row);
         grid[column, row].knot_ID = _knot_ID;
+        knots[_knot_ID] = knot;
     }
 
     public bool FindPath(Knot knot)
@@ -45,6 +48,7 @@ public class GridManager : MonoBehaviour
             return true;
         }
         knot.isCheck = true;
+        knot.parentKnotID = 0;
         Queue<Knot> q = new Queue<Knot>();
         q.Enqueue(knot);
         while(q != null)
@@ -54,17 +58,21 @@ public class GridManager : MonoBehaviour
             {
                 int newXIndex = checkKnot.xIndex + xDirection[i];
                 int newYIndex = checkKnot.yIndex + yDirection[i];
-                if(newXIndex >= 0 && newXIndex < gridRow && newYIndex >= 0 && newYIndex < gridColumn)
+                if(newXIndex >= 0 && newXIndex < gridColumn && newYIndex >= 0 && newYIndex < gridRow)
                 {
-                    if(grid[newXIndex, newYIndex].isCheck == false && grid[newXIndex, newYIndex].isWalkable == true)
+                    //Debug.Log("new X:" + newXIndex + "new Y:" +newYIndex);
+                    //Debug.Log(checkKnot.knot_ID);
+                    Knot nextKnot = grid[newXIndex, newYIndex];
+                    if(nextKnot.isCheck == false && nextKnot.isWalkable == true)
                     {
-                        Debug.Log("x:" +newXIndex + " " + "y:" +newYIndex);
-                        if(CheckIsEndKnot(grid[newXIndex, newYIndex]))
+                        nextKnot.parentKnotID = checkKnot.knot_ID;
+                        //Debug.Log("x:" +newXIndex + " " + "y:" +newYIndex);
+                        if(CheckIsEndKnot(nextKnot))
                         {
                             return true;
                         }
-                        q.Enqueue(grid[newXIndex, newYIndex]);
-                        grid[newXIndex, newYIndex].isCheck = true;
+                        q.Enqueue(nextKnot);
+                        nextKnot.isCheck = true;
                     }
                 }
             }
@@ -74,9 +82,8 @@ public class GridManager : MonoBehaviour
 
     bool CheckIsEndKnot(Knot knot)
     {
-        if(knot.xIndex == endKnot.xIndex && knot.yIndex == endKnot.yIndex)
+        if(knot.knot_ID == endKnot.knot_ID)
         {
-            ResetKnot();
             return true;
         }
         return false;
@@ -112,9 +119,24 @@ public class GridManager : MonoBehaviour
             {
                 if(FindPath(startKnot))
                 {
-                    Debug.Log("Has Path");
+                    ReturnPathRoute(endKnot);
+                    //Debug.Log("Has Path");
                 }    
             }
         }
+    }
+
+    void ReturnPathRoute(Knot knot)
+    {
+        Stack<Knot> pathRoute = new Stack<Knot>();
+        pathRoute.Push(knot);
+        int parentID = knot.parentKnotID;
+        while(parentID != 0)
+        {
+            Knot nextKnot = Array.Find<Knot>(knots, _knot => _knot.knot_ID == pathRoute.Peek().parentKnotID);
+            pathRoute.Push(nextKnot);
+            parentID = nextKnot.parentKnotID;
+        }
+        ResetKnot();
     }
 }
