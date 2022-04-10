@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class GridManager : MonoBehaviour
 {
@@ -29,35 +28,40 @@ public class GridManager : MonoBehaviour
     }
     void Start()
     {
-        KnotGenerator.instance.InstantiateKnot(gridRow, gridColumn);    
+        KnotGenerator.instance.InstantiateKnot(gridColumn, gridRow);    
     }
 
-    public void AddKnot(int row, int column, Knot knot)
+    public void AddKnot(int column, int row, Knot knot, int _knot_ID)
     {
-        grid[row, column] = knot;
-        grid[row, column].SetKnotIndex(row, column);
+        grid[column, row] = knot;
+        grid[column, row].SetKnotIndex(row, column);
+        grid[column, row].knot_ID = _knot_ID;
     }
 
-    public void FindPath(Knot knot)
+    public bool FindPath(Knot knot)
     {
-        knot.isCheck = true;
-        Queue<Knot> q = new Queue<Knot>(); 
-        q.Enqueue(knot);
-        if(q != null)
+        if(CheckIsEndKnot(knot))
         {
-            Knot checkKnot = q.Dequeue();
+            return true;
+        }
+        knot.isCheck = true;
+        Queue<Knot> q = new Queue<Knot>();
+        q.Enqueue(knot);
+        while(q != null)
+        {
+            Knot checkKnot = q.Dequeue();  
             for (int i = 0; i < 4; i++)
             {
                 int newXIndex = checkKnot.xIndex + xDirection[i];
                 int newYIndex = checkKnot.yIndex + yDirection[i];
                 if(newXIndex >= 0 && newXIndex < gridRow && newYIndex >= 0 && newYIndex < gridColumn)
                 {
-                    if(!grid[newXIndex, newYIndex].isCheck && grid[newXIndex, newYIndex].isWalkable)
+                    if(grid[newXIndex, newYIndex].isCheck == false && grid[newXIndex, newYIndex].isWalkable == true)
                     {
                         Debug.Log("x:" +newXIndex + " " + "y:" +newYIndex);
-                        if(CheckEndKnot(grid[newXIndex, newYIndex]))
+                        if(CheckIsEndKnot(grid[newXIndex, newYIndex]))
                         {
-                            return;
+                            return true;
                         }
                         q.Enqueue(grid[newXIndex, newYIndex]);
                         grid[newXIndex, newYIndex].isCheck = true;
@@ -65,9 +69,10 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
+        return false;
     }
 
-    bool CheckEndKnot(Knot knot)
+    bool CheckIsEndKnot(Knot knot)
     {
         if(knot.xIndex == endKnot.xIndex && knot.yIndex == endKnot.yIndex)
         {
@@ -81,6 +86,10 @@ public class GridManager : MonoBehaviour
     {
         startKnot = null;
         endKnot = null;
+        foreach (Knot knot in grid)
+        {
+            knot.isCheck = false;
+        }
     }
 
     public void SelectKnot(Knot knot)
@@ -95,10 +104,17 @@ public class GridManager : MonoBehaviour
         }
         if(startKnot != null && endKnot != null)
         {
-            FindPath(startKnot);
+            if(startKnot.knot_ID == endKnot.knot_ID)
+            {
+                return;
+            }
+            else 
+            {
+                if(FindPath(startKnot))
+                {
+                    Debug.Log("Has Path");
+                }    
+            }
         }
     }
-
-
-
 }

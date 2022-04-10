@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Knot : MonoBehaviour
 {
+    public int knot_ID;
     public int xIndex;
     public int yIndex;
     public bool isWalkable = true;
