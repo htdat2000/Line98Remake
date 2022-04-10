@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a3fea8a93524e46a183c89189bff76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knotGenerator: {fileID: 1840895728}
 --- !u!4 &137078539
 Transform:
   m_ObjectHideFlags: 0
@@ -431,6 +432,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1840895729}
   - component: {fileID: 1840895728}
+  - component: {fileID: 1840895727}
+  - component: {fileID: 1840895730}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -438,6 +441,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1840895727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840895726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbf591a07a2cc14d878f638bc76f117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 8038141821802607512, guid: 67790a3d773e47d4494e806d52b27d7f, type: 3}
 --- !u!114 &1840895728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +487,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1840895730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840895726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29b0bb443365b04399a7a11f9155875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1868226574
 GameObject:
   m_ObjectHideFlags: 0
