@@ -17,23 +17,24 @@ public class KnotGenerator : MonoBehaviour
         instance = this;
     }
 
-    public async void InstantiateKnot(int row, int column)
+    public void InstantiateKnot(int column, int row)
     {
         int knotCount = 0;
-        for (int i = 0; i < row; i++)
+        for (int i = 0; i < column; i++)
         {
-            for (int j = 0; j < column; j++)
+            for (int j = 0; j < row; j++)
             {
                 Vector2 pos = new Vector2 (i, j);
                 GameObject newKnot = Instantiate(knot, pos, Quaternion.identity);
                 newKnot.transform.SetParent(knotHolder.transform);
-                AddKnotToGrid(i, j, newKnot);
+                AddKnotToGrid(i, j, newKnot, knotCount);
+                knotCount ++;
             }
         }
     }
 
-    void AddKnotToGrid(int row, int column, GameObject knot)
+    void AddKnotToGrid(int column, int row, GameObject knot, int _knot_ID)
     {     
-        GridManager.instance.AddKnot(row, column, knot);              
+        GridManager.instance.AddKnot(column, row, knot.GetComponent<Knot>(), _knot_ID);              
     }
 }
