@@ -8,14 +8,28 @@ public class BallSpawner : MonoBehaviour
 
     void Start()
     {
-        SpawnBall(GridManager.instance.grid[2, 4]);
+        int count = 0;
+        while(count < 5)
+        {
+            int xValue = Random.Range(0, 8);
+            int yValue = Random.Range(0, 8);
+            if(SpawnBall(GridManager.instance.grid[xValue, yValue]))
+            {
+                count++;
+            }
+        }
     }
 
-    void SpawnBall(Knot knot)
+    bool SpawnBall(Knot knot)
     {
-        GameObject newBall = Instantiate(ball, knot.gameObject.transform.position, Quaternion.identity);
-        knot.ball = newBall;
-        knot.isWalkable = false;
+        if(knot.isWalkable != false)
+        {
+            GameObject newBall = Instantiate(ball, knot.gameObject.transform.position, Quaternion.identity);
+            knot.ball = newBall;
+            knot.isWalkable = false;
+            return true;
+        }
+        return false;
     }
 
 }

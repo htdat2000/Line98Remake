@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingAI : MonoBehaviour
 {
-    int speed = 3;
+    int speed = 5;
     Knot targetKnot;
     public Stack<Knot> pathRoute = new Stack<Knot>();
     
@@ -42,6 +42,7 @@ public class MovingAI : MonoBehaviour
         }
         else 
         {
+            BallSelectedController.instance.SetState();
             return false;
         }
     }

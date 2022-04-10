@@ -112,13 +112,18 @@ public class GridManager : MonoBehaviour
         {
             if(startKnot.knot_ID == endKnot.knot_ID)
             {
+                ResetKnot();
                 return;
             }
             else 
             {
                 if(FindPath(startKnot))
-                {
-                    BallSelectedController.instance.selectedBall.GetComponent<MovingAI>().pathRoute = ReturnPathRoute(endKnot);
+                {   
+                    BallSelectedController.instance.SetState();
+                    GameObject selectedBall = BallSelectedController.instance.selectedBall;
+                    startKnot.SetBall(null);
+                    endKnot.SetBall(selectedBall);
+                    selectedBall.GetComponent<MovingAI>().pathRoute = ReturnPathRoute(endKnot);
                     //Debug.Log("Has Path");
                 }    
             }

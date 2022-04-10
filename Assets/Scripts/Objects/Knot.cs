@@ -18,6 +18,19 @@ public class Knot : MonoBehaviour
         yIndex = y;
     }
 
+    public void SetBall(GameObject newball)
+    {
+        if(newball != null)
+        {
+            ball = newball;
+            isWalkable = false;
+        }
+        else
+        {
+            ball = null;
+            isWalkable = true;
+        }
+    }
     void OnMouseDown()
     {   
         BallSelectedController.instance.SelectKnot(this);

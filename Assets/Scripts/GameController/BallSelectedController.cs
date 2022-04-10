@@ -31,4 +31,16 @@ public class BallSelectedController : MonoBehaviour
         GridManager.instance.SelectKnot(knot);
         selectedBall = knot.ball;
     }
+
+    public void SetState()
+    {
+        if(state != State.isFree)
+        {
+            state = State.isFree;
+        }
+        else
+        {
+            state = State.isSelectingBall;
+        }
+    }
 }
