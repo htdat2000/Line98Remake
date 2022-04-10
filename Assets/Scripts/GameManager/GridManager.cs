@@ -7,6 +7,7 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager instance; 
     [Header("Grid SetUp")]
+    [SerializeField] KnotGenerator knotGenerator;
     public Knot[,] grid = new Knot [9, 9];
     private int gridRow = 9;
     private int gridColumn = 9;
@@ -18,6 +19,7 @@ public class GridManager : MonoBehaviour
     private Knot[] knots = new Knot [81];
     private int[] xDirection = {-1, 0, 1, 0};
     private int[] yDirection = {0, 1, 0, -1};
+    
 
     void Awake()
     {
@@ -27,10 +29,7 @@ public class GridManager : MonoBehaviour
             return;
         }
         instance = this;
-    }
-    void Start()
-    {
-        KnotGenerator.instance.InstantiateKnot(gridColumn, gridRow);    
+        knotGenerator.InstantiateKnot(gridColumn, gridRow);    
     }
 
     public void AddKnot(int column, int row, Knot knot, int _knot_ID)
@@ -119,14 +118,14 @@ public class GridManager : MonoBehaviour
             {
                 if(FindPath(startKnot))
                 {
-                    ReturnPathRoute(endKnot);
+                    BallSelectedController.instance.selectedBall.GetComponent<MovingAI>().pathRoute = ReturnPathRoute(endKnot);
                     //Debug.Log("Has Path");
                 }    
             }
         }
     }
 
-    void ReturnPathRoute(Knot knot)
+    Stack<Knot> ReturnPathRoute(Knot knot)
     {
         Stack<Knot> pathRoute = new Stack<Knot>();
         pathRoute.Push(knot);
@@ -138,5 +137,6 @@ public class GridManager : MonoBehaviour
             parentID = nextKnot.parentKnotID;
         }
         ResetKnot();
+        return pathRoute;
     }
 }

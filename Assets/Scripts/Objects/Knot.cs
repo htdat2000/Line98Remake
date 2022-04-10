@@ -10,6 +10,7 @@ public class Knot : MonoBehaviour
     public int parentKnotID; //the previous knot id
     public bool isWalkable = true;
     public bool isCheck = false;
+    public GameObject ball;
 
     public void SetKnotIndex(int x, int y)
     {
@@ -19,7 +20,7 @@ public class Knot : MonoBehaviour
 
     void OnMouseDown()
     {   
-        GridManager.instance.SelectKnot(this);
+        BallSelectedController.instance.SelectKnot(this);
         //Debug.Log("x Index:" + xIndex + " y Index" + yIndex);
     }
 }

@@ -6,16 +6,6 @@ public class KnotGenerator : MonoBehaviour
 {
     [SerializeField] GameObject knot;
     [SerializeField] GameObject knotHolder;
-    public static KnotGenerator instance;
-    protected void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogError("More than 1 KnotGenerator in scene");
-            return;
-        }
-        instance = this;
-    }
 
     public void InstantiateKnot(int column, int row)
     {
