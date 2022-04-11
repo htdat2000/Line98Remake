@@ -4,36 +4,10 @@ using UnityEngine;
 
 public class MovingAI : MonoBehaviour
 {
-    int speed = 5;
+    float speed = 0.1f;
     Knot targetKnot;
-    public Stack<Knot> pathRoute = new Stack<Knot>();
     
-    void Update()
-    {
-        Move();
-    }
-
-    void Move()
-    {
-        if(targetKnot == null)
-        {
-            if(!GetTargetKnot())
-            {
-                return;
-            }
-        }
-        else
-        {
-            Vector2 dir = targetKnot.transform.position - transform.position;
-            gameObject.transform.Translate(dir * speed * Time.deltaTime);
-            if(Vector2.Distance(gameObject.transform.position, targetKnot.transform.position) <= 0.1)
-            {
-                GetTargetKnot();
-            }
-        }
-    }
-
-    bool GetTargetKnot()
+    bool GetTargetKnot(Stack<Knot> pathRoute)
     {
         if(pathRoute.Count > 0)
         {
@@ -42,8 +16,35 @@ public class MovingAI : MonoBehaviour
         }
         else 
         {
-            //BallSelectedController.instance.SetState();
+            BallSelectedController.instance.SetState(); //END PATH
             return false;
+        }
+    }
+
+    public void Moving(Stack<Knot> pathRoute)
+    {
+        Stack<Knot> path = pathRoute;
+        while(true)
+        {
+            if(targetKnot == null)
+            {
+                if(!GetTargetKnot(path))
+                {
+                    return;
+                }
+            }
+            else
+            {
+                Vector2 dir = targetKnot.transform.position - transform.position;
+                gameObject.transform.Translate(dir.normalized * speed * Time.deltaTime);
+                if(Vector2.Distance(gameObject.transform.position, targetKnot.transform.position) <= 0.1)
+                {
+                    if(!GetTargetKnot(path))
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
 }

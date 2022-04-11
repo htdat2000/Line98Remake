@@ -119,7 +119,7 @@ public class GridManager : MonoBehaviour
                     GameObject selectedBall = BallSelectedController.instance.selectedBall;
                     startKnot.SetBall(null);
                     endKnot.SetBall(selectedBall);
-                    selectedBall.GetComponent<MovingAI>().pathRoute = ReturnPathRoute(endKnot);
+                    selectedBall.GetComponent<MovingAI>().Moving(ReturnPathRoute(endKnot));
                     //Debug.Log("Has Path");
                 }
                 ResetKnot();    
