@@ -14,8 +14,6 @@ public class GridManager : MonoBehaviour
     //private int numOfKnot = 81;
 
     [Header("Path Finding Setup")]
-    private Knot startKnot;
-    private Knot endKnot;
     private Knot[] knots = new Knot [81];
     private int[] xDirection = {-1, 0, 1, 0};
     private int[] yDirection = {0, 1, 0, -1};
@@ -40,7 +38,7 @@ public class GridManager : MonoBehaviour
         knots[_knot_ID] = knot;
     }
 
-    public bool FindPath(Knot knot)
+    public bool FindPath(Knot knot, Knot endKnot)
     {
         knot.isCheck = true;
         knot.parentKnotID = 0;
@@ -62,7 +60,7 @@ public class GridManager : MonoBehaviour
                     {
                         nextKnot.parentKnotID = checkKnot.knot_ID;
                         //Debug.Log("x:" +newXIndex + " " + "y:" +newYIndex);
-                        if(CheckIsEndKnot(nextKnot))
+                        if(CheckIsEndKnot(nextKnot, endKnot))
                         {
                             return true;
                         }
@@ -75,7 +73,7 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
-    bool CheckIsEndKnot(Knot knot)
+    bool CheckIsEndKnot(Knot knot, Knot endKnot)
     {
         if(knot.knot_ID == endKnot.knot_ID)
         {
@@ -84,50 +82,8 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
-    void ResetKnot()
-    {
-        startKnot = null;
-        endKnot = null;
-        foreach (Knot knot in grid)
-        {
-            knot.isCheck = false;
-        }
-    }
 
-    public void SelectKnot(Knot knot)
-    {
-        if(startKnot == null)
-        {
-            startKnot = knot;
-        }
-        else
-        {
-            endKnot = knot;
-        }
-        if(startKnot != null && endKnot != null)
-        {
-            if(CheckIsEndKnot(startKnot))
-            {
-                ResetKnot();
-                return;
-            }
-            else 
-            {
-                if(FindPath(startKnot) && startKnot.ball != null)
-                {   
-                    BallSelectedController.instance.SetState();
-                    GameObject selectedBall = BallSelectedController.instance.selectedBall;
-                    startKnot.SetBall(null);
-                    endKnot.SetBall(selectedBall);
-                    selectedBall.GetComponent<MovingAI>().Moving(ReturnPathRoute(endKnot));
-                    //Debug.Log("Has Path");
-                }
-                ResetKnot();    
-            }
-        }
-    }
-
-    Stack<Knot> ReturnPathRoute(Knot knot)
+    public Stack<Knot> ReturnPathRoute(Knot knot)
     {
         Stack<Knot> pathRoute = new Stack<Knot>();
         pathRoute.Push(knot);
@@ -138,7 +94,6 @@ public class GridManager : MonoBehaviour
             pathRoute.Push(nextKnot);
             parentID = nextKnot.parentKnotID;
         }
-        ResetKnot();
         return pathRoute;
     }
 }
