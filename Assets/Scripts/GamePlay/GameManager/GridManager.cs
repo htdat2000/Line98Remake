@@ -50,7 +50,7 @@ public class GridManager : MonoBehaviour
         knot.parentKnotID = 0;
         Queue<Knot> q = new Queue<Knot>();
         q.Enqueue(knot);
-        while(q != null)
+        while(q.Count > 0)
         {
             Knot checkKnot = q.Dequeue();  
             for (int i = 0; i < 4; i++)
@@ -117,7 +117,7 @@ public class GridManager : MonoBehaviour
             }
             else 
             {
-                if(FindPath(startKnot))
+                if(FindPath(startKnot) && startKnot.ball != null)
                 {   
                     BallSelectedController.instance.SetState();
                     GameObject selectedBall = BallSelectedController.instance.selectedBall;
@@ -125,7 +125,8 @@ public class GridManager : MonoBehaviour
                     endKnot.SetBall(selectedBall);
                     selectedBall.GetComponent<MovingAI>().pathRoute = ReturnPathRoute(endKnot);
                     //Debug.Log("Has Path");
-                }    
+                }
+                ResetKnot();    
             }
         }
     }

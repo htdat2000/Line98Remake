@@ -37,6 +37,7 @@ public class BallSelectedController : MonoBehaviour
         if(state != State.isFree)
         {
             state = State.isFree;
+            selectedBall = null;
         }
         else
         {

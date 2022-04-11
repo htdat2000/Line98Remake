@@ -42,7 +42,7 @@ public class MovingAI : MonoBehaviour
         }
         else 
         {
-            BallSelectedController.instance.SetState();
+            //BallSelectedController.instance.SetState();
             return false;
         }
     }
