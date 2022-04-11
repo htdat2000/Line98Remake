@@ -42,10 +42,6 @@ public class GridManager : MonoBehaviour
 
     public bool FindPath(Knot knot)
     {
-        if(CheckIsEndKnot(knot))
-        {
-            return true;
-        }
         knot.isCheck = true;
         knot.parentKnotID = 0;
         Queue<Knot> q = new Queue<Knot>();
@@ -110,7 +106,7 @@ public class GridManager : MonoBehaviour
         }
         if(startKnot != null && endKnot != null)
         {
-            if(startKnot.knot_ID == endKnot.knot_ID)
+            if(CheckIsEndKnot(startKnot))
             {
                 ResetKnot();
                 return;

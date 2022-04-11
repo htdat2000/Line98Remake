@@ -29,7 +29,10 @@ public class BallSelectedController : MonoBehaviour
             return;
         }
         GridManager.instance.SelectKnot(knot);
-        selectedBall = knot.ball;
+        if(knot.ball != null)
+        {
+            selectedBall = knot.ball;
+        }
     }
 
     public void SetState()
