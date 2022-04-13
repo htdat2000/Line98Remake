@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BallSpawner : MonoBehaviour
 {
+    public static BallSpawner instance;
     public GameObject ball;
     public GameObject ballHolder;
     public List<Knot> notHasBallKnots = new List<Knot>();
@@ -11,12 +12,17 @@ public class BallSpawner : MonoBehaviour
 
     void Start()
     {
+        if(instance != null)
+        {
+            return;
+        }
+        instance = this;
         GetBallsAtBeginning();
         SpawnBall();
         Debug.Log(notHasBallKnots[1].knot_ID);
     }
 
-    void SpawnBall()
+    public void SpawnBall()
     {
         if(notHasBallKnots.Count < 3)
         {
@@ -29,22 +35,21 @@ public class BallSpawner : MonoBehaviour
         }
         else
         {
-            int count = 0;
-            while(count < 3)
+            for (int i = 0; i < 3; i++)
             {
                 int randValue = Random.Range(0, notHasBallKnots.Count);
-                SpawnRandomPosition(notHasBallKnots[randValue]);
-                count++; 
+                SpawnRandomPosition(notHasBallKnots[randValue]);  
             }
         }
     }
 
     void SpawnRandomPosition(Knot knot)
     {
+        ChangeBallToOtherList(notHasBallKnots, hasBallKnots, knot);   
         GameObject newBall = Instantiate(ball, knot.gameObject.transform.position, Quaternion.identity);
         knot.ball = newBall;
         knot.isWalkable = false;
-        ChangeBallToOtherList(notHasBallKnots, hasBallKnots, knot);          
+               
     }
 
     void GetBallsAtBeginning()
@@ -60,7 +65,4 @@ public class BallSpawner : MonoBehaviour
         addList.Add(knot);
         removeList.Remove(knot);
     }
-
-
-
 }

@@ -97,6 +97,7 @@ public class BallSelectedController : MonoBehaviour
         {
             state = State.isFree;
             selectedBall = null;
+            BallSpawner.instance.SpawnBall();
         }
         else
         {
