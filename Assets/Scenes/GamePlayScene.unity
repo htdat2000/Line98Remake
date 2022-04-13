@@ -454,6 +454,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 8038141821802607512, guid: 67790a3d773e47d4494e806d52b27d7f, type: 3}
+  ballHolder: {fileID: 1682561153}
+  notHasBallKnots: []
+  hasBallKnots: []
 --- !u!114 &1840895728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b0bb443365b04399a7a11f9155875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedBall: {fileID: 0}
 --- !u!1 &1868226574
 GameObject:
   m_ObjectHideFlags: 0

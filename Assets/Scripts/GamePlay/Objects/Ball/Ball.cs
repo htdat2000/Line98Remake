@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    enum Color
+    public enum Color
     {
         Red,
         Blue,
         Yellow
     }
-    enum Action
-    {
-        isMoving,
-        isIdle,
-    }
-
+    
+    Color ballColor;
     
 }
