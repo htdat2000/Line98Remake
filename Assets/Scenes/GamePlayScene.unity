@@ -453,8 +453,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbf591a07a2cc14d878f638bc76f117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitingBall:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   ball: {fileID: 8038141821802607512, guid: 67790a3d773e47d4494e806d52b27d7f, type: 3}
-  ballHolder: {fileID: 1682561153}
+  knotHolder: {fileID: 1682561153}
   notHasBallKnots: []
   hasBallKnots: []
 --- !u!114 &1840895728
@@ -732,3 +736,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022322480}
   m_CullTransparentMesh: 0
+--- !u!1001 &7692486402485110207
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434323, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692486401611434325, guid: c98f56fc062d1e640a39e9ba301cf4e4,
+        type: 3}
+      propertyPath: m_Name
+      value: waitingBall
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c98f56fc062d1e640a39e9ba301cf4e4, type: 3}

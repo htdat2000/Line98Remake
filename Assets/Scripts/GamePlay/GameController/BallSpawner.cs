@@ -5,8 +5,12 @@ using UnityEngine;
 public class BallSpawner : MonoBehaviour
 {
     public static BallSpawner instance;
+    
+    public GameObject[] waitingBall = new GameObject[3];
+
     public GameObject ball;
-    public GameObject ballHolder;
+    
+    public GameObject knotHolder;
     public List<Knot> notHasBallKnots = new List<Knot>();
     public List<Knot> hasBallKnots = new List<Knot>();
 
@@ -19,7 +23,6 @@ public class BallSpawner : MonoBehaviour
         instance = this;
         GetBallsAtBeginning();
         SpawnBall();
-        Debug.Log(notHasBallKnots[1].knot_ID);
     }
 
     public void SpawnBall()
@@ -37,8 +40,9 @@ public class BallSpawner : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                int randValue = Random.Range(0, notHasBallKnots.Count);
-                SpawnRandomPosition(notHasBallKnots[randValue]);  
+                int randValue = Random.Range(0, notHasBallKnots.Count - 1);
+                SpawnRandomPosition(notHasBallKnots[randValue]);
+                SetWaitingBallPosition(i, notHasBallKnots[randValue]);
             }
         }
     }
@@ -48,15 +52,14 @@ public class BallSpawner : MonoBehaviour
         ChangeBallToOtherList(notHasBallKnots, hasBallKnots, knot);   
         GameObject newBall = Instantiate(ball, knot.gameObject.transform.position, Quaternion.identity);
         knot.ball = newBall;
-        knot.isWalkable = false;
-               
+        knot.isWalkable = false;           
     }
 
     void GetBallsAtBeginning()
     {
-        for (int i = 0; i < ballHolder.transform.childCount ; i++)
+        for (int i = 0; i < knotHolder.transform.childCount ; i++)
         {
-            notHasBallKnots.Add(ballHolder.transform.GetChild(i).GetComponent<Knot>());
+            notHasBallKnots.Add(knotHolder.transform.GetChild(i).GetComponent<Knot>());
         }
     }
 
@@ -64,5 +67,10 @@ public class BallSpawner : MonoBehaviour
     {
         addList.Add(knot);
         removeList.Remove(knot);
+    }
+
+    void SetWaitingBallPosition(int waitingBallIndex,Knot knot)
+    {
+        waitingBall[waitingBallIndex].transform.position = knot.gameObject.transform.position; 
     }
 }
