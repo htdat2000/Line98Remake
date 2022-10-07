@@ -10,7 +10,6 @@ public class Ball : MonoBehaviour
         Blue,
         Yellow
     }
-    
     Color ballColor;
     
 }

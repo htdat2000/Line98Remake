@@ -6,25 +6,40 @@ public class BallSpawner : MonoBehaviour
 {
     public static BallSpawner instance;
     
-    public GameObject[] waitingBall = new GameObject[3];
+    //public GameObject[] waitingBall = new GameObject[3];
 
-    public GameObject ball;
-    
-    public GameObject knotHolder;
-    public List<Knot> notHasBallKnots = new List<Knot>();
-    public List<Knot> hasBallKnots = new List<Knot>();
+    [SerializeField] GameObject ball;
+    List<GameObject> balls = new List<GameObject>();
+    [SerializeField] GameObject ballHolder;
 
-    void Start()
+    [SerializeField] GameObject knotHolder;
+    List<Knot> notHasBallKnots = new List<Knot>();
+    List<Knot> hasBallKnots = new List<Knot>();
+
+    void Awake()
     {
         if(instance != null)
         {
             return;
         }
         instance = this;
-        GetBallsAtBeginning();
-        SpawnBall();
+        for (int i = 0; i < 81; i++)
+        {
+            GameObject newBall = Instantiate(ball, transform.position, Quaternion.identity, ballHolder.transform);
+            newBall.SetActive(false);
+        }
+    }
+    void Start()
+    {
+        GetKnotsAtBeginning();
     }
 
+
+    #region Spawn Process
+    void RandomKnot()
+    {
+        
+    }
     public void SpawnBall()
     {
         if(notHasBallKnots.Count < 3)
@@ -42,35 +57,35 @@ public class BallSpawner : MonoBehaviour
             {
                 int randValue = Random.Range(0, notHasBallKnots.Count - 1);
                 SpawnRandomPosition(notHasBallKnots[randValue]);
-                SetWaitingBallPosition(i, notHasBallKnots[randValue]);
             }
         }
     }
 
     void SpawnRandomPosition(Knot knot)
     {
-        ChangeBallToOtherList(notHasBallKnots, hasBallKnots, knot);   
+        ChangeKnotToOtherList(notHasBallKnots, hasBallKnots, knot);   
         GameObject newBall = Instantiate(ball, knot.gameObject.transform.position, Quaternion.identity);
         knot.ball = newBall;
         knot.isWalkable = false;           
-    }
+    } 
 
-    void GetBallsAtBeginning()
+    void ChangeKnotToOtherList(List<Knot> removeList, List<Knot> addList, Knot knot)
+    {
+        removeList.Remove(knot);
+        addList.Add(knot);
+    }
+    #endregion
+
+    void GetKnotsAtBeginning()
     {
         for (int i = 0; i < knotHolder.transform.childCount ; i++)
         {
             notHasBallKnots.Add(knotHolder.transform.GetChild(i).GetComponent<Knot>());
         }
+        //SpawnBall();
     }
 
-    void ChangeBallToOtherList(List<Knot> removeList, List<Knot> addList, Knot knot)
-    {
-        addList.Add(knot);
-        removeList.Remove(knot);
-    }
+    
 
-    void SetWaitingBallPosition(int waitingBallIndex,Knot knot)
-    {
-        waitingBall[waitingBallIndex].transform.position = knot.gameObject.transform.position; 
-    }
+
 }
